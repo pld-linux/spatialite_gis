@@ -2,11 +2,12 @@ Summary:	Minimalistic GIS tool built on top of SpatiaLite and RasterLite
 Summary(pl.UTF-8):	Minimalistyczne narzędzie GIS stworzone w oparciu o SpatiaLite i RasterLite
 Name:		spatialite_gis
 Version:	1.0.0c
-Release:	3
+Release:	4
 License:	GPL v3+
 Group:		Applications/Databases
 Source0:	http://www.gaia-gis.it/gaia-sins/spatialite-gis-sources/%{name}-%{version}.tar.gz
 # Source0-md5:	81de8d7f3e20038bd2ec721edc02dfb0
+Patch0:		wxWidgets3.patch
 URL:		https://www.gaia-gis.it/fossil/spatialite_gis
 BuildRequires:	freexl-devel
 BuildRequires:	geos-devel
@@ -34,11 +35,13 @@ RasterLite.
 
 %prep
 %setup -q
+%patch0 -p1
 
 mkdir wx-bin
 ln -sf /usr/bin/wx-gtk2-unicode-config wx-bin/wx-config
 
 %build
+%{__autoconf}
 # configure refers to wx-config with no option to override
 PATH=$(pwd)/wx-bin:$PATH
 %configure

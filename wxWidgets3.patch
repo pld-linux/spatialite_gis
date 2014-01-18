@@ -1,0 +1,44 @@
+diff -ur spatialite_gis-1.0.0c/Classdef.h spatialite_gis-1.0.0c.wx3/Classdef.h
+--- spatialite_gis-1.0.0c/Classdef.h	2011-12-28 18:37:48.000000000 +0100
++++ spatialite_gis-1.0.0c.wx3/Classdef.h	2014-01-18 19:14:31.518720315 +0100
+@@ -30,6 +30,7 @@
+ #include "wx/spinctrl.h"
+ #include "wx/listctrl.h"
+ #include "wx/grid.h"
++#include <wx/graphics.h>
+ 
+ #ifdef SPATIALITE_AMALGAMATION
+ #include <spatialite/sqlite3.h>
+diff -ur spatialite_gis-1.0.0c/configure.ac spatialite_gis-1.0.0c.wx3/configure.ac
+--- spatialite_gis-1.0.0c/configure.ac	2011-12-28 18:37:48.000000000 +0100
++++ spatialite_gis-1.0.0c.wx3/configure.ac	2014-01-18 19:26:11.855381913 +0100
+@@ -21,7 +21,7 @@
+ 
+ CXXFLAGS="$(wx-config --cxxflags)"
+ AM_CXXFLAGS="$(wx-config --cxxflags)"
+-WX_LIBS="$(wx-config --libs)"
++WX_LIBS="$(wx-config --libs) -lwx_gtk2u_aui-3.0"
+ AC_SUBST(WX_LIBS)
+ 
+ # Checks for header files.
+diff -ur spatialite_gis-1.0.0c/MapView.cpp spatialite_gis-1.0.0c.wx3/MapView.cpp
+--- spatialite_gis-1.0.0c/MapView.cpp	2011-12-28 18:37:48.000000000 +0100
++++ spatialite_gis-1.0.0c.wx3/MapView.cpp	2014-01-18 19:22:52.105383358 +0100
+@@ -1160,7 +1160,7 @@
+       if (layer->GetType() == VECTOR_LAYER)
+         {
+           if (layer->GetTableName() == active->GetTableName() &&
+-              layer->GetGeometryColumn() && active->GetGeometryColumn())
++              !layer->GetGeometryColumn().IsEmpty() && !active->GetGeometryColumn().IsEmpty())
+             {
+               // OK: performing Identify
+               Identify(layer, IdentifyMouseX, IdentifyMouseY);
+@@ -1789,7 +1789,7 @@
+           if (layer->GetType() == VECTOR_LAYER)
+             {
+               if (layer->GetTableName() == active->GetTableName() &&
+-                  layer->GetGeometryColumn() && active->GetGeometryColumn())
++                  !layer->GetGeometryColumn().IsEmpty() && !active->GetGeometryColumn().IsEmpty())
+                 {
+                   // OK: performing Identify
+                   Identify(layer, MouseIdentifyX, MouseIdentifyY);
