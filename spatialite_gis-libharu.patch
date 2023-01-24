@@ -1,0 +1,20 @@
+--- spatialite_gis-1.0.0c/OutputMap.cpp.orig	2011-12-28 18:41:12.000000000 +0100
++++ spatialite_gis-1.0.0c/OutputMap.cpp	2023-01-24 18:54:34.655999122 +0100
+@@ -4073,7 +4073,7 @@ void MyMapOutput::PdfLinestring(HPDF_Pag
+   double r = layer->GetLineColor().Red() / 255.0;
+   double g = layer->GetLineColor().Green() / 255.0;
+   double b = layer->GetLineColor().Blue() / 255.0;
+-  HPDF_UINT16 dash_ptn[4];
++  HPDF_REAL dash_ptn[4];
+   HPDF_Page_SetRGBStroke(page, r, g, b);
+   HPDF_Page_SetLineWidth(page, layer->GetLineThickness());
+   if (layer->GetLineStyle() == wxDOT)
+@@ -4226,7 +4226,7 @@ void MyMapOutput::PdfPolygon(HPDF_Page p
+   double r;
+   double g;
+   double b;
+-  HPDF_UINT16 dash_ptn[4];
++  HPDF_REAL dash_ptn[4];
+   if (layer->DrawBorderOk() == true)
+     {
+       r = layer->GetLineColor().Red() / 255.0;
